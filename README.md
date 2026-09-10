@@ -1,129 +1,48 @@
-# September 2026 revival preview
+![Federated MCP](docs/assets/header.svg)
 
-Use [modern/](modern/README.md) for the bounded public RuFlo federation observation adapter. The legacy WebSocket federation proxy is retired because it placed reusable credentials in connection URLs. Its registration method now refuses all connections.
+# Federated MCP v2 preview
 
-This is a scoped revival, not a production qualification of the historical edge and deployment code below. See [the decision](docs/revival/ADR-001-bounded-revival.md) and [other revival candidates](docs/revival/OPPORTUNITIES.md). Run the modern package tests and the two legacy retirement regression tests before review.
+Observe public RuFlo federation activity from your terminal or an MCP agent. The adapter reads x.ruv.io through the official MCP SDK, labels every result as untrusted observation, and never turns messages into commands.
 
-## Historical documentation
+| Capability | Supported behavior |
+| --- | --- |
+| Federation identity and claims | Public snapshots with source and observation time |
+| Channel discovery and reading | Public named channels only; private ciphertext remains private |
+| CLI and MCP | Same bounded reader, local policy resource, validation and benchmark tools |
+| Resource controls | Four concurrent reads, 30 second deadline, 1 MiB response, 64 KiB input frames |
+| MetaHarness | Maintainer, security, release and benchmark profiles with host adapters |
+| Autogenous | Explicit fitness gate; no automatic promotion or deployment |
 
-The following describes the original 2024 project and contains claims that have not been revalidated.
+## Install and use
 
-# AI Federation Network
+Requires Node 24. Clone this repository, then:
 
-A distributed runtime system for federated AI services with edge computing capabilities.
-
-# Complete implementation following the official MCP specification:
-
-The Model Context Protocol (MCP) enables federated connections between AI systems and various data sources through a standardized architecture. Here’s a complete implementation following the official specification:
-
-This implementation provides a foundation for building federated MCP systems that can scale across multiple servers while maintaining the protocol’s security and standardization requirements. The federation layer enables seamless communication between different MCP servers, allowing AI systems to maintain context while moving between different tools and datasets.
-
-The implementation supports both local and remote connections through multiple transport mechanisms, including stdio for local process communication and HTTP with Server-Sent Events for remote connections. 
-
-Security is maintained through strict capability negotiation and user consent requirement
-
-Model Context Protocol (MCP) with Federation Support
-
-## Key Benefits
-
-**Simplified Integration**:
-- Eliminates custom connections for each data source
-- Standardizes AI connections with enterprise tools
-- Maintains context across federated tools and datasets
-
-## Federation Architecture
-
-**Core Components**:
-- Federation Controller: Manages cross-server communication
-- Proxy Layer: Handles authentication between federated servers
-- Identity Management: Controls access across federated instances
-
-## Basic Structure
-
-**System Components**:
-- MCP Hosts: AI applications needing federated data access
-- MCP Servers: Programs providing federated resource access
-- MCP Clients: Components maintaining federated connections
-- Federation Proxy: Manages cross-server authentication
- 
-## Real-World Applications
-
-**Implementation Areas**:
-- Development tools with federated code repositories
-- Enterprise systems with distributed databases
-- Cross-organizational content repositories
-- Multi-region business tool integration
-
-## Security Features
-
-**Protection Mechanisms**:
-- Federated authentication and authorization
-- Cross-server resource isolation
-- Distributed consent management
-- Encrypted cross-server communication
-- Granular capability control
-
-MCP with federation support enables secure, standardized AI system integration across organizational boundaries while maintaining strict security controls and seamless data access.
-
-# Deno Nodejs version 
-complete implementation using both Deno and Node.js. Let's start with the project structure:
-
-
-### 🌐 Network Protocols
-- JSON-RPC 2.0
-- HTTP/REST
-- WebSocket
-
-### ⚡ Edge Computing
-- Multi-provider support (Supabase, Cloudflare Workers, Fly.io)
-- Serverless function deployment
-- Real-time logs and monitoring
-- Auto-scaling capabilities
-
-### 🔐 Security
-- Provider-specific authentication
-- Secure credential storage
-- Environment isolation
-- Access control
-
-### 📡 Runtime Features
-- Task execution
-- Federation support
-- Intent detection
-- Meeting information processing
-- Webhook handling
-- Real-time status monitoring
-- System health checks
-
-## System Architecture
-
-```mermaid
-graph TD
-    A[AI Federation Network] --> B[Core Runtime]
-    B --> C[Edge Computing]
-    B --> D[Network Layer]
-    B --> E[Security]
-    
-    C --> F[Supabase]
-    C --> G[Cloudflare]
-    C --> H[Fly.io]
-    
-    D --> I[JSON-RPC]
-    D --> J[HTTP/REST]
-    D --> K[WebSocket]
-    
-    E --> L[Auth]
-    E --> M[Credentials]
-    E --> N[Access Control]
+```sh
+npm ci --ignore-scripts --prefix modern
+node modern/src/cli.mjs status
+node modern/src/cli.mjs identity
+node modern/src/cli.mjs channels
+node modern/src/cli.mjs read '{"channel":"pub:ruflo-release","limit":10}'
+node modern/src/cli.mjs mcp
 ```
 
-## Getting Started
+For an MCP host, configure command `node` and arguments `["/absolute/path/federated-mcp/modern/src/server.mjs"]`. Install dependencies before starting the host. No gateway admin token is needed or accepted. MCP validation requires operator environment `RUV_ALLOW_VALIDATION=1`; the CLI test and bench commands explicitly opt in. Children have a fixed command, sanitized environment, 30 second deadline and 64 KiB output cap.
 
-```bash
-# Run the server
-deno run --allow-net --allow-env --allow-read --allow-write --allow-run src/apps/deno/server.ts
+```sh
+npm test
+node modern/src/cli.mjs test
+node modern/src/cli.mjs bench
+npm audit --prefix modern
 ```
 
-## License
+## Security and evidence
 
-MIT License - See LICENSE file for details.
+Gateway authorship is not independent verification of peers or task execution. The reader cannot publish, mint invites, claim work, supply caller URLs or use credentials. Public content stays inert. The gateway identity can change; inspect its current response instead of treating a historical relay address as authoritative.
+
+The legacy credential-bearing WebSocket proxy is retired and regression tested. Historical edge code is retained for reference but is outside the supported v2 entrypoints. See [ADR 001](docs/revival/ADR-001-bounded-revival.md), [ADR 002](docs/revival/ADR-002-project-agent.md), [validation](docs/revival/VALIDATION-v2.md), and [historical documentation](docs/historical-2024.md).
+
+[MetaHarness package](.harness/generated/README.md) supplies local agent profiles and host integration. Field memory needs operator-owned storage and identity configuration; no production identity or live deployment is provisioned by installation.
+
+## Related projects
+
+[RuFlo](https://github.com/ruvnet/ruflo), [MetaHarness](https://github.com/ruvnet/metaharness), [Autogenous](https://github.com/ruvnet/autogenous), [RuVector](https://github.com/ruvnet/ruvector), [AgentBBS](https://github.com/ruvnet/AgentBBS), [QuDAG](https://github.com/ruvnet/QuDAG), and [the federation](https://x.ruv.io) provide related orchestration, evaluation, memory and coordination capabilities. Linking a project does not imply runtime integration.

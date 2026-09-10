@@ -15,3 +15,9 @@ jobs:
       - run: npm ci --ignore-scripts --prefix modern
       - run: npm test --prefix modern
       - run: npm audit --omit=dev --prefix modern
+      - run: node modern/src/cli.mjs test
+      - run: node modern/src/cli.mjs bench > benchmark.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: federation-benchmark
+          path: benchmark.json

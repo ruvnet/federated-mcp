@@ -1,13 +1,15 @@
 import { Client, StreamableHTTPClientTransport } from '@modelcontextprotocol/client';
 
 export const ENDPOINT = 'https://x.ruv.io/mcp';
-export const TOOLS = Object.freeze(['federation_identity', 'federation_sync', 'claims_status']);
+export const TOOLS = Object.freeze(['federation_identity', 'federation_sync', 'claims_status', 'channel_list', 'channel_sync']);
 export function validateCall(name, args = {}) {
   if (!TOOLS.includes(name)) throw new Error('Tool is not allowed');
   if (!args || typeof args !== 'object' || Array.isArray(args)) throw new Error('Arguments must be an object');
-  const allowed = name === 'federation_sync' ? ['limit', 'sinceSeconds'] : [];
+  const allowed = ['federation_sync', 'channel_list', 'channel_sync'].includes(name) ? ['limit', 'sinceSeconds', ...(name === 'channel_sync' ? ['channel'] : [])] : [];
   if (Object.keys(args).some(key => !allowed.includes(key))) throw new Error('Unknown argument');
+  if (name === 'channel_sync' && (typeof args.channel !== 'string' || !/^pub:[a-zA-Z0-9_-]{1,80}$/.test(args.channel))) throw new Error('Public channel required');
   for (const [key, value] of Object.entries(args)) {
+    if (key === 'channel') continue;
     const maximum = key === 'limit' ? 100 : 604800;
     if (!Number.isInteger(value) || value < 1 || value > maximum) throw new Error(`Invalid ${key}`);
   }
@@ -17,7 +19,7 @@ export function validateCall(name, args = {}) {
 // Fetch injection is a trusted embedding/test seam, never exposed over MCP or environment.
 export class FederationReader {
   #fetch; #active = 0; #timeout; #maxBytes;
-  constructor({ fetchImpl = globalThis.fetch, timeoutMs = 10000, maxBytes = 1048576 } = {}) {
+  constructor({ fetchImpl = globalThis.fetch, timeoutMs = 30000, maxBytes = 1048576 } = {}) {
     if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 30000) throw new Error('Invalid timeout');
     if (!Number.isInteger(maxBytes) || maxBytes < 256 || maxBytes > 1048576) throw new Error('Invalid byte limit');
     this.#fetch = fetchImpl; this.#timeout = timeoutMs; this.#maxBytes = maxBytes;
@@ -41,7 +43,7 @@ export class FederationReader {
       });
       if (response.status >= 300 && response.status < 400) throw new Error('Redirect denied');
       if (Number(response.headers.get('content-length')) > this.#maxBytes) {
-        await response.body?.cancel(); throw new Error('Response exceeds byte limit');
+        void response.body?.cancel().catch(() => {}); throw new Error('Response exceeds byte limit');
       }
       if (!response.body) return response;
       const reader = response.body.getReader(); let bytes = 0; let finished = false;
@@ -70,7 +72,7 @@ export class FederationReader {
             finished = true; cleanup(); stream.error(error); void reader.cancel().catch(() => {});
           }
         },
-        async cancel() { finished = true; cleanup(); await reader.cancel(); }
+        cancel() { finished = true; cleanup(); void reader.cancel().catch(() => {}); }
       }, { highWaterMark: 0 });
       const thisLimit = this.#maxBytes;
       return new Response(body, { status: response.status, headers: response.headers });

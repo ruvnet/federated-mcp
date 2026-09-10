@@ -67,7 +67,7 @@ test('actual subprocess stdio initialize, discovery, invocation and write denial
   const client = new Client({ name: 'e2e', version: '1' }, { capabilities: {} });
   try {
     await client.connect(transport);
-    const { tools } = await client.listTools(); assert.equal(tools.length, 3);
+    const { tools } = await client.listTools(); assert.equal(tools.length, 8);
     assert.ok(tools.every(t => t.annotations.readOnlyHint));
     const result = await client.callTool({ name: 'federation_sync', arguments: { limit: 2 } });
     assert.equal(JSON.parse(result.content[0].text).provenance, 'gateway-observation');
@@ -107,4 +107,9 @@ test('stdio rejects oversized frame without responding to its tool call', async 
   });
   assert.equal(stdout.includes('gateway-observation'), false);
   assert.equal(stdout.includes('"id":45'), false);
+});
+
+test('channel observation rejects private and malformed channels', () => {
+  for (const channel of ['prv:1234567890abcdef', 'pub:', 'https://evil.test', 'pub:x/../../']) assert.throws(() => validateCall('channel_sync', { channel }));
+  assert.deepEqual(validateCall('channel_sync', { channel: 'pub:ruflo-release', limit: 10 }), { channel: 'pub:ruflo-release', limit: 10 });
 });
