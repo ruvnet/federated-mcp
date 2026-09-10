@@ -1,0 +1,24 @@
+{
+  "measuredAt": "2026-09-10T20:33:42.318Z",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "methodology": "10 warmups then 100 sequential calls. In process fetch fixture, no network. Each bridge call includes fresh SDK initialization, notification, tool request, shutdown. Baseline parses one fixture payload only; not an equivalent protocol implementation or SOTA comparison.",
+  "baselineParse": {
+    "iterations": 100,
+    "p50Ms": 0.0013720000000034815,
+    "p95Ms": 0.003474999999980355,
+    "meanMs": 0.0016692700000007221
+  },
+  "sdkJsonLifecycle": {
+    "iterations": 100,
+    "p50Ms": 0.5035060000000158,
+    "p95Ms": 0.8359890000000121,
+    "meanMs": 0.5864016600000005
+  },
+  "sdkSseLifecycle": {
+    "iterations": 100,
+    "p50Ms": 0.6846549999999922,
+    "p95Ms": 1.158346999999992,
+    "meanMs": 0.7539122599999979
+  }
+}

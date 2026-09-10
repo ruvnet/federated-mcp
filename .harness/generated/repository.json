@@ -1,0 +1,12 @@
+{
+  "entrypoint": "modern/src/cli.mjs",
+  "commands": [
+    "status",
+    "test",
+    "benchmark",
+    "mcp"
+  ],
+  "aliases": {
+    "benchmark": "bench"
+  }
+}

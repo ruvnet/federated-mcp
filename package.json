@@ -1,5 +1,9 @@
 {
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "github:modelcontextprotocol/typescript-sdk"
+  "name": "federated-mcp",
+  "version": "2.0.0-alpha.1",
+  "private": true,
+  "scripts": {
+    "test": "node --test src/tests/federation.test.ts src/tests/workflow.test.ts && npm test --prefix modern",
+    "bench": "npm run bench --prefix modern"
   }
 }
