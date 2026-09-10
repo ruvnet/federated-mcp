@@ -1,0 +1,94 @@
+{
+  "observed": "2026-09-10",
+  "criterion": "pushed_at before 2025-09-10, nonfork, nonarchived; not proof of all personal activity",
+  "repositories": [
+    {
+      "name": "guardrail",
+      "description": "GuardRail: Advanced tool for data analysis and AI content generation using OpenAI GPT models. Features sentiment analysis, content classification, trend analysis, and tailored GPT model usage. Ideal for content moderation, customer support, and market research.",
+      "pushed_at": "2023-12-12T21:20:27Z",
+      "updated_at": "2026-09-08T06:57:42Z",
+      "stargazers_count": 154,
+      "default_branch": "main",
+      "fork": false,
+      "archived": false,
+      "html_url": "https://github.com/ruvnet/guardrail"
+    },
+    {
+      "name": "ultrasonic",
+      "description": "A comprehensive steganography framework for embedding and extracting agentic commands in audio and video media using ultrasonic frequencies. This project provides tools for covert communication and command transmission through multimedia channels.",
+      "pushed_at": "2025-06-09T04:26:31Z",
+      "updated_at": "2026-09-10T12:57:31Z",
+      "stargazers_count": 103,
+      "default_branch": "main",
+      "fork": false,
+      "archived": false,
+      "html_url": "https://github.com/ruvnet/ultrasonic"
+    },
+    {
+      "name": "federated-mcp",
+      "description": "This implementation follows the official MCP specification, including proper message framing, transport layer implementation, and complete protocol lifecycle management. It provides a foundation for building federated MCP systems that can scale across multiple servers while maintaining security and standardization requirements.",
+      "pushed_at": "2024-11-26T22:11:23Z",
+      "updated_at": "2026-09-08T06:56:43Z",
+      "stargazers_count": 67,
+      "default_branch": "main",
+      "fork": false,
+      "archived": false,
+      "html_url": "https://github.com/ruvnet/federated-mcp"
+    },
+    {
+      "name": "agentic-search",
+      "description": "An Agentic Github Copilot Extension",
+      "pushed_at": "2025-05-20T19:11:52Z",
+      "updated_at": "2026-09-08T06:56:10Z",
+      "stargazers_count": 44,
+      "default_branch": "main",
+      "fork": false,
+      "archived": false,
+      "html_url": "https://github.com/ruvnet/agentic-search"
+    },
+    {
+      "name": "Agent-Name-Service",
+      "description": "Agent Name Service (ANS) Protocol, introduced by the OWASP GenAI Security Project, is a foundational framework designed to facilitate secure discovery and interaction among AI agents. ",
+      "pushed_at": "2025-05-16T12:34:26Z",
+      "updated_at": "2026-09-08T06:56:11Z",
+      "stargazers_count": 82,
+      "default_branch": "main",
+      "fork": false,
+      "archived": false,
+      "html_url": "https://github.com/ruvnet/Agent-Name-Service"
+    },
+    {
+      "name": "agentic-voice",
+      "description": "Agentic Chat App is an advanced AI-powered chat application designed for seamless real-time communication and intelligent responses. Built with Next.js, OpenAI, and Exa API, it leverages cutting-edge technologies to enhance user interactions and provide contextual, relevant information dynamically.",
+      "pushed_at": "2024-07-15T15:26:01Z",
+      "updated_at": "2026-09-08T06:57:11Z",
+      "stargazers_count": 125,
+      "default_branch": "main",
+      "fork": false,
+      "archived": false,
+      "html_url": "https://github.com/ruvnet/agentic-voice"
+    },
+    {
+      "name": "auto-browser",
+      "description": "A command-line tool for configurable web automation with AI-assisted template creation.",
+      "pushed_at": "2025-01-24T16:39:47Z",
+      "updated_at": "2026-09-08T06:56:35Z",
+      "stargazers_count": 100,
+      "default_branch": "main",
+      "fork": false,
+      "archived": false,
+      "html_url": "https://github.com/ruvnet/auto-browser"
+    },
+    {
+      "name": "promptlang",
+      "description": "A Prompt based programming language for prompts and AI interactions. Simple and human-readable syntax for easy integration with APIs and data.",
+      "pushed_at": "2023-12-12T21:37:43Z",
+      "updated_at": "2026-09-08T06:57:41Z",
+      "stargazers_count": 135,
+      "default_branch": "main",
+      "fork": false,
+      "archived": false,
+      "html_url": "https://github.com/ruvnet/promptlang"
+    }
+  ]
+}

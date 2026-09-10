@@ -1,3 +1,13 @@
+# September 2026 revival preview
+
+Use [modern/](modern/README.md) for the bounded public RuFlo federation observation adapter. The legacy WebSocket federation proxy is retired because it placed reusable credentials in connection URLs. Its registration method now refuses all connections.
+
+This is a scoped revival, not a production qualification of the historical edge and deployment code below. See [the decision](docs/revival/ADR-001-bounded-revival.md) and [other revival candidates](docs/revival/OPPORTUNITIES.md). Run the modern package tests and the two legacy retirement regression tests before review.
+
+## Historical documentation
+
+The following describes the original 2024 project and contains claims that have not been revalidated.
+
 # AI Federation Network
 
 A distributed runtime system for federated AI services with edge computing capabilities.
